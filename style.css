@@ -53,3 +53,30 @@ button {
   text-decoration: line-through;
   color: #aaa;
 }
+.todo-item div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-item span {
+  flex-grow: 1;
+}
+
+.complete-btn,
+.delete-btn {
+  border: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.complete-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
