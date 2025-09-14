@@ -4,29 +4,8 @@ const todoList = document.querySelector("#todo-list");
 // آرایه ای بعنوان "منبع حقیقت" برای ذخیره کارها
 let todos = [];
 
-// تابعی برای رندر کردن کارها
-function renderTodos() {
-    todoList.innerHTML = "";
-    todos.forEach((todo)=>{
-        const listItem = document.createElement("li");
-        listItem.classList.add("todo-item");
-        // یک دیتا اتریبیوت برای نگهداری آی دی تسک اضافه کن
-        listItem.setAttribute('data-id', todo.id);
-        // اگر تسک کامل شده بود کلاس completed را اضافه کن
-        if (todo.completed) {
-            listItem.classList.add("completed");
-        }
-        // ساختار داخلی li
-        listItem.innerHTML = `
-         <span>${todo.text}</span>
-         <div>
-         <button class="delete-btn">×</button>
-         <button class="complete-btn">✓</button>
-        </div>
-    `;
-    todoList.append(listItem);
-    })
-}
+import { renderTodos } from "./modules/ui.js";
+
 form.addEventListener("submit", (e)=>{
     e.preventDefault();
     const taskText = input.value.trim();
@@ -38,7 +17,7 @@ form.addEventListener("submit", (e)=>{
         };
         todos.push(newTodo);
         input.value = "";
-        renderTodos();
+        renderTodos(todos, todoList);
     }
 });
 todoList.addEventListener("click", (e)=>{
@@ -51,13 +30,13 @@ todoList.addEventListener("click", (e)=>{
     //اگر روی دکمه completed کلیک شد
     if(target.classList.contains("complete-btn")) {
         // پیدا کردن تسک در آرایه و تغییر وضعیت completed آن
-        todos = todos.map(todo => todo.id === todoId ? {...todo,completed: !todo.completed} : todo);
-        renderTodos();
+        todos = todos.map(todo => todo.id === todoId ? {...todo,completed: !todo.completed} : todo); // ...todo: یعنی "یک کپی کامل از آبجکت todo فعلی بساز." (این کار با spread syntax انجام می‌شود).
+        renderTodos(todos,todoList);
     }
     // اگر روی دکمه "حذف" کلیک شد
     if(target.classList.contains("delete-btn")){
         todos = todos.filter(todo=> todo.id !== todoId);
-        renderTodos();
+        renderTodos(todos,todoList);
     }
 
 });
